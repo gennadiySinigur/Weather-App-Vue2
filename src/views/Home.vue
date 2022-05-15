@@ -3,19 +3,22 @@
     class="mx-auto px-4 py-4 mt-10"
     width="450px"
   >
-    <v-text-field
-      v-model="city"
-      label="Enter city"
-      hide-details="auto"
-      class="mb-4"
-    />
+    <form @submit.prevent="submit">
+      <v-text-field
+        v-model="city"
+        label="Enter city"
+        hide-details="auto"
+        class="mb-4"
+      />
 
-    <v-btn
-      :loading="isLoading"
-      @click="searchWeatherByCity"
-    >
-      Search weather
-    </v-btn>
+      <v-btn
+        :loading="isLoading"
+        type="submit"
+        @click="searchWeatherByCity"
+      >
+        Search weather
+      </v-btn>
+    </form>
 
     <v-card
       v-if="isWeatherDisplaying"
