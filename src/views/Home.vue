@@ -9,6 +9,8 @@
         label="Enter city"
         hide-details="auto"
         class="mb-4"
+        clearable
+        @click:clear="onClearClicked"
       />
 
       <v-btn
@@ -79,6 +81,10 @@ export default {
       await this.getWeatherByCity();
 
       this.isWeatherDisplaying = true;
+    },
+
+    onClearClicked() {
+      this.isWeatherDisplaying = false;
     },
   },
 };
