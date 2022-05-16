@@ -8,6 +8,8 @@
         v-model="cityInserted"
         label="Enter city"
         hide-details="auto"
+        hint="For example, New York"
+        prepend-inner-icon="mdi-map-marker"
         class="mb-4"
         clearable
         @click:clear="onClearClicked"
