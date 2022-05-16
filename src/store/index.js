@@ -1,6 +1,6 @@
 import { API_KEY } from '@/api/apiKey';
 import axios from 'axios';
-import { showAlertForUser } from '@/utils/alertForUser';
+import { catchError } from '@/utils/catchError';
 import Vue from 'vue';
 import Vuex from 'vuex';
 import { weatherApi } from '@/api/weatherApi';
@@ -66,7 +66,6 @@ export default new Vuex.Store({
   },
 
   actions: {
-    // eslint-disable-next-line max-lines-per-function
     async getWeatherByCity({ commit, state }) {
       commit('setLoading', true);
       commit('setUrlForWeather');
@@ -78,17 +77,10 @@ export default new Vuex.Store({
           commit('setTemperature');
           commit('setFeelLike');
           commit('setHumidity');
-
           commit('setIsWeatherDisplaying', true);
         })
         .catch((error) => {
-          if (!error.response) {
-            return;
-          }
-
-          const errorMessage = error.response.data.message;
-
-          showAlertForUser(errorMessage);
+          catchError(error);
 
           commit('setIsWeatherDisplaying', false);
         })
