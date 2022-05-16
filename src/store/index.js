@@ -10,6 +10,7 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     isLoading: false,
+    isWeatherDisplaying: false,
     city: '',
     weatherQueryParameters: '',
     weatherUrl: '',
@@ -43,6 +44,10 @@ export default new Vuex.Store({
       return state.weatherUrl;
     },
 
+    setIsWeatherDisplaying: (state, status) => {
+      state.isWeatherDisplaying = status;
+    },
+
     setLoading: (state, status) => {
       state.isLoading = status;
     },
@@ -61,6 +66,7 @@ export default new Vuex.Store({
   },
 
   actions: {
+    // eslint-disable-next-line max-lines-per-function
     async getWeatherByCity({ commit, state }) {
       commit('setLoading', true);
       commit('setUrlForWeather');
@@ -72,6 +78,8 @@ export default new Vuex.Store({
           commit('setTemperature');
           commit('setFeelLike');
           commit('setHumidity');
+
+          commit('setIsWeatherDisplaying', true);
         })
         .catch((error) => {
           if (!error.response) {
@@ -81,6 +89,8 @@ export default new Vuex.Store({
           const errorMessage = error.response.data.message;
 
           showAlertForUser(errorMessage);
+
+          commit('setIsWeatherDisplaying', false);
         })
         .finally(() => {
           commit('setLoading', false);
