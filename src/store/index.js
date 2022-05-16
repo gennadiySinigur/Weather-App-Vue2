@@ -33,8 +33,12 @@ export default new Vuex.Store({
     },
 
     setUrlForWeather: (state) => {
-      // eslint-disable-next-line max-len
-      state.weatherUrl = `${weatherApi}${state.weatherQueryParameters}&appid=${API_KEY}`;
+      state.weatherUrl = `${
+        weatherApi +
+        state.weatherQueryParameters +
+        '&appid=' +
+        API_KEY
+      }`;
 
       return state.weatherUrl;
     },
