@@ -33,7 +33,7 @@ module.exports = {
     ],
 
     "quotes": ["error", "single"],
-    "prefer-template": "error",
+    // "prefer-template": "error",
     "template-curly-spacing": "error",
     "no-eval": "error",
 
