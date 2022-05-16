@@ -3,18 +3,18 @@
     class="mx-auto px-4 py-4 mt-10"
     width="450px"
   >
-    <form @submit.prevent="submit">
+    <form>
       <v-text-field
-        v-model="city"
+        v-model="cityInserted"
         label="Enter city"
         hide-details="auto"
         class="mb-4"
       />
 
       <v-btn
-        :loading="isLoading"
         type="submit"
-        @click="searchWeatherByCity"
+        :loading="isButtonLoading"
+        @click="getWeather"
       >
         Search weather
       </v-btn>
@@ -35,67 +35,50 @@
 
 <script>
 // @ is an alias to /src
-import { API_KEY } from '@/api/apiKey';
-import axios from 'axios';
-import { weatherApi } from '@/api/weatherApi';
+import { mapActions, mapMutations, mapState } from 'vuex';
 
 export default {
   name: 'Home',
 
   data() {
     return {
-      isLoading: false,
-      city: '',
       isWeatherDisplaying: false,
-      temperature: '',
-      feelsLike: '',
-      humidity: '',
+      cityInserted: '',
     };
   },
 
   computed: {
-    weatherQueryParameters() {
-      return `q=${this.city}&units=metric`;
-    },
+    ...mapState([
+      'isLoading',
+      'temperature',
+      'feelsLike',
+      'humidity',
+    ]),
 
-    urlForWeather() {
-      return `${weatherApi}${this.weatherQueryParameters}&appid=${API_KEY}`;
+    isButtonLoading() {
+      if (this.isLoading) {
+        return true;
+      }
+
+      return false;
     },
   },
 
   methods: {
-    async searchWeatherByCity() {
-      this.isLoading = true;
+    ...mapActions(['getWeatherByCity']),
 
-      await axios.get(this.urlForWeather)
-        .then((response) => {
-          const temperature = Math.floor(response.data.main.temp);
-          const feelsLike = Math.floor(response.data.main.feels_like);
-          const { humidity } = response.data.main;
+    ...mapMutations([
+      'setWeatherQueryParameters',
+      'setUrlForWeather',
+    ]),
 
-          this.temperature = temperature;
-          this.feelsLike = feelsLike;
-          this.humidity = humidity;
+    async getWeather() {
+      this.setWeatherQueryParameters(this.cityInserted);
+      this.setUrlForWeather();
 
-          this.isWeatherDisplaying = true;
-        })
-        .catch((error) => {
-          const errorMessage = error.response.data.message;
+      await this.getWeatherByCity();
 
-          return this.$swal.fire({
-            title: 'Error!',
-            icon: 'error',
-            showConfirmButton: true,
-            text: errorMessage,
-            customClass: {
-              content: 'red',
-            },
-          });
-        })
-        .finally(() => {
-          this.isLoading = false;
-        })
-      ;
+      this.isWeatherDisplaying = true;
     },
   },
 };
