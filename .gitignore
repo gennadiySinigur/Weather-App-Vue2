@@ -23,4 +23,4 @@ pnpm-debug.log*
 *.sw?
 
 # API KEY
-/src/api/apiKey.js
+/src/api/apiKey.ts

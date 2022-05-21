@@ -1,7 +1,7 @@
 import 'sweetalert2/dist/sweetalert2.min.css';
 import Swal from 'sweetalert2';
 
-export const showAlertForUser = (errorMessage) => {
+export const showAlertForUser = (errorMessage: string): void => {
   const errorText = document.createElement('p');
   const titleText = document.createElement('h4');
 
@@ -11,7 +11,7 @@ export const showAlertForUser = (errorMessage) => {
   errorText.style.fontFamily = 'sans-serif';
   titleText.style.fontFamily = 'sans-serif';
 
-  return Swal.fire({
+  Swal.fire({
     title: titleText,
     icon: 'error',
     showConfirmButton: true,

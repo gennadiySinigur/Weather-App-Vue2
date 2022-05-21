@@ -7,6 +7,29 @@ import { weatherApi } from '@/api/weatherApi';
 
 Vue.use(Vuex);
 
+interface WeatherDataType {
+  data: {
+    main: {
+      temp: number,
+      // eslint-disable-next-line camelcase
+      feels_like: number,
+      humidity: number,
+    }
+  }
+}
+
+interface StateType {
+  isLoading: boolean,
+  isWeatherDisplaying: boolean,
+  city: string,
+  weatherQueryParameters: string,
+  weatherUrl: string,
+  weatherData: WeatherDataType,
+  temperature: string,
+  feelsLike: string,
+  humidity: string,
+}
+
 export default new Vuex.Store({
   state: {
     isLoading: false,
@@ -14,18 +37,20 @@ export default new Vuex.Store({
     city: '',
     weatherQueryParameters: '',
     weatherUrl: '',
-    weatherData: {},
+
+    weatherData: {} as WeatherDataType,
+
     temperature: '',
     feelsLike: '',
     humidity: '',
-  },
+  } as StateType,
 
   getters: {
     //
   },
 
   mutations: {
-    setWeatherQueryParameters: (state, city) => {
+    setWeatherQueryParameters: (state: StateType, city: string): string => {
       state.city = city;
 
       state.weatherQueryParameters = `q=${city}&units=metric`;
@@ -33,7 +58,7 @@ export default new Vuex.Store({
       return state.weatherQueryParameters;
     },
 
-    setUrlForWeather: (state) => {
+    setUrlForWeather: (state: StateType): string => {
       state.weatherUrl = `${
         weatherApi +
         state.weatherQueryParameters +
@@ -44,29 +69,29 @@ export default new Vuex.Store({
       return state.weatherUrl;
     },
 
-    setIsWeatherDisplaying: (state, status) => {
+    setIsWeatherDisplaying: (state: StateType, status: boolean): void => {
       state.isWeatherDisplaying = status;
     },
 
-    setLoading: (state, status) => {
+    setLoading: (state: StateType, status: boolean): void => {
       state.isLoading = status;
     },
 
-    setTemperature: (state) => {
-      state.temperature = Math.floor(state.weatherData.data.main.temp);
+    setTemperature: (state: StateType): void => {
+      state.temperature = `${Math.floor(state.weatherData.data.main.temp)}`;
     },
 
-    setFeelLike: (state) => {
-      state.feelsLike = Math.floor(state.weatherData.data.main.feels_like);
+    setFeelLike: (state: StateType): void => {
+      state.feelsLike = `${Math.floor(state.weatherData.data.main.feels_like)}`;
     },
 
-    setHumidity: (state) => {
-      state.humidity = state.weatherData.data.main.humidity;
+    setHumidity: (state: StateType): void => {
+      state.humidity = `${state.weatherData.data.main.humidity}`;
     },
   },
 
   actions: {
-    async getWeatherByCity({ commit, state }) {
+    async getWeatherByCity({ commit, state }): Promise<void> {
       commit('setLoading', true);
       commit('setUrlForWeather');
 

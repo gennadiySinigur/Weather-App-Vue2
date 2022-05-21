@@ -1,4 +1,5 @@
 import 'sweetalert2/dist/sweetalert2.min.css';
+import 'vuetify/dist/vuetify.min.css';
 import App from './App.vue';
 import axios from 'axios';
 import router from './router';
@@ -7,6 +8,9 @@ import Vue from 'vue';
 import VueAxios from 'vue-axios';
 import VueSweetalert2 from 'vue-sweetalert2';
 import vuetify from './plugins/vuetify';
+
+import Vuetify from 'vuetify';
+Vue.use(Vuetify);
 
 Vue.config.productionTip = false;
 
@@ -18,7 +22,6 @@ new Vue({
   router,
   store,
   vuetify,
-  VueSweetalert2,
   // eslint-disable-next-line id-length
   render: (h) => {
     return h(App);

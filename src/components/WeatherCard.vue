@@ -37,16 +37,17 @@
   </v-card>
 </template>
 
-<script>
+<script lang="ts">
 // @ is an alias to /src
 import { mapActions, mapMutations, mapState } from 'vuex';
+import Vue from 'vue';
 
-export default {
+export default Vue.extend({
   name: 'WeatherCard',
 
   data() {
     return {
-      cityInserted: '',
+      cityInserted: '' as string,
     };
   },
 
@@ -59,7 +60,7 @@ export default {
       'isWeatherDisplaying',
     ]),
 
-    isButtonLoading() {
+    isButtonLoading(): boolean {
       if (this.isLoading) {
         return true;
       }
@@ -67,7 +68,7 @@ export default {
       return false;
     },
 
-    isWeatherInfoDisplaying() {
+    isWeatherInfoDisplaying(): boolean {
       if (this.isWeatherDisplaying) {
         return true;
       }
@@ -85,16 +86,16 @@ export default {
       'setIsWeatherDisplaying',
     ]),
 
-    async getWeather() {
+    async getWeather(): Promise<void> {
       this.setWeatherQueryParameters(this.cityInserted);
       this.setUrlForWeather();
 
       await this.getWeatherByCity();
     },
 
-    onClearClicked() {
+    onClearClicked(): void {
       this.setIsWeatherDisplaying(false);
     },
   },
-};
+});
 </script>
