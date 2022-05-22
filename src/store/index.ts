@@ -19,7 +19,6 @@ interface WeatherDataType {
 }
 
 interface StateType {
-  isLoading: boolean,
   isWeatherDisplaying: boolean,
   city: string,
   weatherQueryParameters: string,
@@ -32,7 +31,6 @@ interface StateType {
 
 export default new Vuex.Store({
   state: {
-    isLoading: false,
     isWeatherDisplaying: false,
     city: '',
     weatherQueryParameters: '',
@@ -73,10 +71,6 @@ export default new Vuex.Store({
       state.isWeatherDisplaying = status;
     },
 
-    setLoading: (state: StateType, status: boolean): void => {
-      state.isLoading = status;
-    },
-
     setTemperature: (state: StateType): void => {
       state.temperature = `${Math.floor(state.weatherData.data.main.temp)}`;
     },
@@ -92,7 +86,6 @@ export default new Vuex.Store({
 
   actions: {
     async getWeatherByCity({ commit, state }): Promise<void> {
-      commit('setLoading', true);
       commit('setUrlForWeather');
 
       await axios.get(state.weatherUrl)
@@ -108,9 +101,6 @@ export default new Vuex.Store({
           catchError(error);
 
           commit('setIsWeatherDisplaying', false);
-        })
-        .finally(() => {
-          commit('setLoading', false);
         });
     },
   },

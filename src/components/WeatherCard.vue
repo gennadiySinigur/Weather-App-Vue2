@@ -17,7 +17,7 @@
 
       <v-btn
         type="submit"
-        :loading="isButtonLoading"
+        :loading="isLoading"
         @click="getWeather"
       >
         Search weather
@@ -47,26 +47,18 @@ export default Vue.extend({
 
   data() {
     return {
+      isLoading: false as boolean,
       cityInserted: '' as string,
     };
   },
 
   computed: {
     ...mapState([
-      'isLoading',
       'temperature',
       'feelsLike',
       'humidity',
       'isWeatherDisplaying',
     ]),
-
-    isButtonLoading(): boolean {
-      if (this.isLoading) {
-        return true;
-      }
-
-      return false;
-    },
 
     isWeatherInfoDisplaying(): boolean {
       if (this.isWeatherDisplaying) {
@@ -87,10 +79,14 @@ export default Vue.extend({
     ]),
 
     async getWeather(): Promise<void> {
+      this.isLoading = true;
+
       this.setWeatherQueryParameters(this.cityInserted);
       this.setUrlForWeather();
 
       await this.getWeatherByCity();
+
+      this.isLoading = false;
     },
 
     onClearClicked(): void {
