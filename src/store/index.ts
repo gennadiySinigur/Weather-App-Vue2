@@ -1,8 +1,9 @@
-import { API_KEY } from '@/api/apiKey';
 import axios from 'axios';
-import { catchError } from '@/utils/catchError';
 import Vue from 'vue';
 import Vuex from 'vuex';
+
+import { API_KEY } from '@/api/apiKey';
+import { catchError } from '@/utils/catchError';
 import { weatherApi } from '@/api/weatherApi';
 
 Vue.use(Vuex);

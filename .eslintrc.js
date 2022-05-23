@@ -83,10 +83,10 @@ module.exports = {
     'no-confusing-arrow': 'error',
     'no-useless-constructor': 'error',
     'no-dupe-class-members': 'error',
-    'sort-imports': [
-      'error',
-      { 'ignoreCase': true },
-    ],
+    // 'sort-imports': [
+    //   'error',
+    //   { 'ignoreCase': true },
+    // ],
     'no-duplicate-imports': [
       'error',
       { 'includeExports': true },
