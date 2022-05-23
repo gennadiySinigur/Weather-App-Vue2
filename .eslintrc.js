@@ -10,6 +10,8 @@ module.exports = {
     'eslint:recommended',
     '@vue/typescript',
     "@vue/typescript/recommended",
+    'plugin:import/errors',
+    'plugin:import/warnings',
   ],
 
   parserOptions: {
@@ -19,7 +21,14 @@ module.exports = {
   plugins: [
     'eslint-plugin-prettier',
     'eslint-plugin-vue',
+    'import',
   ],
+
+  settings: {
+    "import/resolver": {
+      typescript: {} // this loads <rootdir>/tsconfig.json to eslint
+    },
+  },
 
   rules: {
     // "no-console": process.env.NODE_ENV === "production" ? "warn" : "off",
@@ -83,24 +92,43 @@ module.exports = {
     'no-confusing-arrow': 'error',
     'no-useless-constructor': 'error',
     'no-dupe-class-members': 'error',
+
     // 'sort-imports': [
     //   'error',
     //   { 'ignoreCase': true },
     // ],
+
+    'import/order': [
+      2,
+      {
+        groups: [
+          'builtin',
+          'external',
+          'internal',
+          ['parent', 'sibling', 'index'],
+        ],
+        'newlines-between': 'always',
+      },
+    ],
+
     'no-duplicate-imports': [
       'error',
       { 'includeExports': true },
     ],
+
     'no-iterator': 'error',
+
     'no-restricted-syntax': [
       'error',
       'ForStatement',
     ],
+
     'generator-star-spacing': [
       'error',
       { 'before': true,
         'after': true },
     ],
+
     'dot-notation': 'error',
 
     'no-restricted-properties': [
@@ -116,12 +144,15 @@ module.exports = {
       'error',
       'never',
     ],
+
     'no-multi-assign': 'error',
     'no-plusplus': 'error',
+
     'operator-linebreak': [
       'error',
       'after',
     ],
+
     'eqeqeq': 'error',
     'no-case-declarations': 'error',
     'no-nested-ternary': 'error',

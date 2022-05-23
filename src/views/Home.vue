@@ -5,7 +5,7 @@
 <script lang="ts">
 import Vue from 'vue';
 
-import WeatherCard from '@components/WeatherCard.vue';
+import WeatherCard from '@/components/WeatherCard.vue';
 
 export default Vue.extend({
   name: 'Home',
