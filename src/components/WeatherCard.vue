@@ -42,13 +42,18 @@
 import { mapActions, mapMutations, mapState } from 'vuex';
 import Vue from 'vue';
 
+interface WeatherCardDataType {
+  isLoading: boolean,
+  cityInserted: string,
+}
+
 export default Vue.extend({
   name: 'WeatherCard',
 
-  data() {
+  data(): WeatherCardDataType {
     return {
-      isLoading: false as boolean,
-      cityInserted: '' as string,
+      isLoading: false,
+      cityInserted: '',
     };
   },
 

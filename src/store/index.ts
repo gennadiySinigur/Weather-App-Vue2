@@ -29,7 +29,7 @@ interface StateType {
   humidity: string,
 }
 
-export default new Vuex.Store({
+export default new Vuex.Store<StateType>({
   state: {
     isWeatherDisplaying: false,
     city: '',
@@ -41,7 +41,7 @@ export default new Vuex.Store({
     temperature: '',
     feelsLike: '',
     humidity: '',
-  } as StateType,
+  },
 
   getters: {
     //
